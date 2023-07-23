@@ -26,13 +26,16 @@
                     'rounded-xl bg-white p-3',
                     'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                 ]">
-                        <followingTabFeed />
+                        <followingTabFeed v-if="userStore.isAuthenticated"/>
+                        <div class="text-red text-center">Login to view this page</div>
                 </TabPanel>
                 <TabPanel :class="[
                     'rounded-xl bg-white p-3',
                     'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                 ]">
-                    <userList />
+                    <userList v-if="userStore.isAuthenticated"/>
+                    <div class="text-red text-center">Login to view this page</div>
+
                 </TabPanel>
             </TabPanels>
         </TabGroup>

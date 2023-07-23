@@ -18,7 +18,7 @@
 
 
                 <RouterLink to="/" href="#" class="text-sm font-semibold leading-6 text-gray-900">Home</RouterLink>
-                <RouterLink to="/profile" href="#" class="text-sm font-semibold leading-6 text-gray-900">Profile</RouterLink>
+                <RouterLink v-if="userStore.isAuthenticated" to="/profile" href="#" class="text-sm font-semibold leading-6 text-gray-900">Profile</RouterLink>
             </PopoverGroup>
             <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                 <button type="submit" @click="openModal" v-if="!userStore.isAuthenticated"
