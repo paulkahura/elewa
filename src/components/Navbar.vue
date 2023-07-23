@@ -167,7 +167,6 @@ let users = userStore.users
 const handleSubmit = () => {
     console.log(email.value)
   const user = users.find(u => u.email === email.value && u.address.zipcode === password.value);
-console.log(user)
   if (user) {
     signinMessage=''
     isOpen.value = false

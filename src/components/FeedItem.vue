@@ -1,7 +1,18 @@
 <template>
     <div>
         <div>
-            <div v-for="post in postStore.posts.slice(0, count)" :key="post.id"
+            <div>
+                <div class="relative mb-2 rounded-md shadow-sm">
+                    
+                    <input type="text" name="price" id="price" v-model="searchQuery"  
+                        class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder="enter text to search" />
+                    <div class="absolute inset-y-0 right-0 flex items-center">
+                        <MagnifyingGlassCircleIcon class="h-10 w-8 flex-none mr-2" aria-hidden="true" />
+                    </div>
+                </div>
+            </div>
+            <div v-for="post in filteredPosts" :key="post.id"
                 class="relative rounded-md p-3 hover:bg-gray-100">
                 <div class="flex mb-2">
                     <img :src="profileImage" alt="profile Image" width="30">
@@ -132,6 +143,8 @@ import { useUserStore } from '../stores/UserStore';
 import { useCommentStore } from '../stores/CommentStore';
 import profileImage from '@/assets/avatar.png';
 import profileUser from '@/assets/profile-user.png';
+import {MagnifyingGlassCircleIcon } from '@heroicons/vue/20/solid'
+
 import {
     Disclosure, DisclosureButton,
     DisclosurePanel,
@@ -148,7 +161,7 @@ const postStore = usePostStore()
 const userStore = useUserStore()
 const phonenumber = ref('')
 let count = 20
-
+const searchQuery = ref('');
 onMounted(() => {
     postStore.fetchPosts();
 })
@@ -177,8 +190,8 @@ const processPayment = () => {
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log(error));
-        isOpen.value = false
-        count = 100
+    isOpen.value = false
+    count = 100
 };
 
 const getUserName = (userId) => {
@@ -203,6 +216,15 @@ const followedPosts = computed(() => {
     const followedUserIds = userStore.following;
     console.log(postStore.posts)
     return postStore.posts.filter(post => followedUserIds.includes(post.userId));
+});
+
+const filteredPosts = computed(() => {
+  if (!searchQuery.value) {
+    return postStore.posts.slice(0, count);
+  }
+
+  const normalizedSearchQuery = searchQuery.value.toLowerCase().trim();
+  return postStore.posts.filter(post => post.title.toLowerCase().includes(normalizedSearchQuery)).slice(0, count);
 });
 const isOpen = ref(false)
 
