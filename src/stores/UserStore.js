@@ -5,6 +5,7 @@ export const useUserStore = defineStore('userStore', {
         users: [],
         following: [],
         isAuthenticated: false,
+        user:{}
     }),
     getters: {},
     actions: {
