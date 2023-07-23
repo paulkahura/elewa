@@ -8,7 +8,7 @@
                 </a>
             </div>
             <div class="flex lg:hidden">
-                <button v-if="!userStore.isAuthenticated" type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
                     @click="mobileMenuOpen = true">
                     <span class="sr-only">Open main menu</span>
                     <Bars3Icon class="h-6 w-6" aria-hidden="true" />
@@ -46,11 +46,18 @@
                 </div>
                 <div class="mt-6 flow-root">
                     <div class="-my-6 divide-y divide-gray-500/10">
-                        
+                        <div class="py-4 flex flex-col">
+                            <RouterLink to="/" href="#" class="text-sm font-semibold leading-6 text-gray-900 pb-5 pt-2" @click="mobileMenuOpen = false">Home</RouterLink>
+                            <RouterLink v-if="userStore.isAuthenticated" to="/profile" href="#" class="text-sm font-semibold leading-6 text-gray-900" @click="mobileMenuOpen = false">Profile</RouterLink>
+                        </div>
                         <div class="py-6">
                             <a href="#" @click="openModal" v-if="!userStore.isAuthenticated"
                                 class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
                                 in</a>
+
+                                <a href="#" @click="openModal" v-if="userStore.isAuthenticated"
+                                class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
+                                out</a>
                         </div>
                     </div>
                 </div>
@@ -160,7 +167,7 @@ let users = userStore.users
 const handleSubmit = () => {
     console.log(email.value)
   const user = users.find(u => u.email === email.value && u.address.zipcode === password.value);
-
+console.log(user)
   if (user) {
     signinMessage=''
     isOpen.value = false
