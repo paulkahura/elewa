@@ -18,13 +18,16 @@
 
 
                 <RouterLink to="/" href="#" class="text-sm font-semibold leading-6 text-gray-900">Home</RouterLink>
-                <RouterLink v-if="userStore.isAuthenticated" to="/profile" href="#" class="text-sm font-semibold leading-6 text-gray-900">Profile</RouterLink>
+                <RouterLink v-if="userStore.isAuthenticated" to="/profile" href="#"
+                    class="text-sm font-semibold leading-6 text-gray-900">Profile</RouterLink>
+                <RouterLink v-if="userStore.isAuthenticated" to="/myfeed" href="#"
+                    class="text-sm font-semibold leading-6 text-gray-900">My Posts</RouterLink>
             </PopoverGroup>
             <div class="hidden lg:flex lg:flex-1 lg:justify-end">
                 <button type="submit" @click="openModal" v-if="!userStore.isAuthenticated"
                     class="rounded-md  bg-indigo-600 px-3 py-1.5 text-sm font-medium leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
                     In</button>
-                    <button type="submit" @click="logout" v-if="userStore.isAuthenticated"
+                <button type="submit" @click="logout" v-if="userStore.isAuthenticated"
                     class="rounded-md  bg-red-600 px-3 py-1.5 text-sm font-medium leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Sign
                     out</button>
             </div>
@@ -36,8 +39,7 @@
                 <div class="flex items-center justify-between">
                     <a href="#" class="-m-1.5 p-1.5">
                         <span class="sr-only">Elewa chat</span>
-                        <img class="h-8 w-auto" :src="chat"
-                            alt="" />
+                        <img class="h-8 w-auto" :src="chat" alt="" />
                     </a>
                     <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = false">
                         <span class="sr-only">Close menu</span>
@@ -47,15 +49,22 @@
                 <div class="mt-6 flow-root">
                     <div class="-my-6 divide-y divide-gray-500/10">
                         <div class="py-4 flex flex-col">
-                            <RouterLink to="/" href="#" class="text-sm font-semibold leading-6 text-gray-900 pb-5 pt-2" @click="mobileMenuOpen = false">Home</RouterLink>
-                            <RouterLink v-if="userStore.isAuthenticated" to="/profile" href="#" class="text-sm font-semibold leading-6 text-gray-900" @click="mobileMenuOpen = false">Profile</RouterLink>
+                            <RouterLink to="/" href="#" class="text-sm font-semibold leading-6 text-gray-900 pb-5 pt-2"
+                                @click="mobileMenuOpen = false">Home</RouterLink>
+                            <RouterLink v-if="userStore.isAuthenticated" to="/myfeed" href="#"
+                                class="text-sm font-semibold leading-6 text-gray-900 mb-5" @click="mobileMenuOpen = false">
+                                My Posts</RouterLink>
+
+                            <RouterLink v-if="userStore.isAuthenticated" to="/profile" href="#"
+                                class="text-sm font-semibold leading-6 text-gray-900" @click="mobileMenuOpen = false">
+                                Profile</RouterLink>
                         </div>
                         <div class="py-6">
                             <a href="#" @click="openModal" v-if="!userStore.isAuthenticated"
                                 class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
                                 in</a>
 
-                                <a href="#" @click="openModal" v-if="userStore.isAuthenticated"
+                            <a href="#" @click="openModal" v-if="userStore.isAuthenticated"
                                 class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
                                 out</a>
                         </div>
@@ -79,13 +88,11 @@
                                 class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                 <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                                     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                                        <img class="mx-auto h-10 w-auto"
-                                            :src="chat"
-                                            alt="Your Company" />
+                                        <img class="mx-auto h-10 w-auto" :src="chat" alt="Your Company" />
                                         <h2
                                             class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                                             Sign in to your account</h2>
-                                            <p class="text-red" v-if="signinMessage">{{ signinMessage }}</p>
+                                        <p class="text-red" v-if="signinMessage">{{ signinMessage }}</p>
                                     </div>
 
                                     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -166,17 +173,19 @@ let users = userStore.users
 
 const handleSubmit = () => {
     console.log(email.value)
-  const user = users.find(u => u.email === email.value && u.address.zipcode === password.value);
-  if (user) {
-    signinMessage=''
-    isOpen.value = false
-    userStore.isAuthenticated = true
-    userStore.user = user
-    alert('Login successful!');
-  } else {
-    signinMessage='invalid email or password'
-    alert('Invalid email or password. Please try again.');
-  }
+    const user = userStore.users.find(
+        (user) => user.email === email.value && user.address.zipcode === password.value
+    );;
+    if (user) {
+        signinMessage = ''
+        isOpen.value = false
+        userStore.isAuthenticated = true
+        userStore.user = user
+        alert('Login successful!');
+    } else {
+        signinMessage = 'invalid email or password'
+        alert('Invalid email or password. Please try again.');
+    }
 };
 const mobileMenuOpen = ref(false)
 const isOpen = ref(false)
